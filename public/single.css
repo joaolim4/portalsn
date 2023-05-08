@@ -1,0 +1,39 @@
+
+
+.news-main {
+    position: relative;
+    top: 4vw;
+    margin: 0;
+    width: 100vw;
+    padding-bottom: 2vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    flex-wrap: wrap;
+    background-color: white;
+}
+
+.news-main * {
+    margin-top: 2vw;
+    position: relative;
+    width: 80vw;
+    left: 10vw;
+    color: black;
+    text-align: left;
+}
+
+
+
+
+@media (max-width: 720px){
+
+    .news-main {
+        top: 15vw;
+    }
+
+
+}
+
+
