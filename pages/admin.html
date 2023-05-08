@@ -1,0 +1,137 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/c58d6bbdac.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/public/admin.css">
+        <link rel="stylesheet" href="/public/partials.css">
+    </head>
+    <body> 
+        <%- include('partials/header.html') %>
+        <div class="container">
+            <div class="menu">
+                <button onclick="toggleMenus('new-post')">Nova matéria</button>
+                <button onclick="toggleMenus('edit-post')">Editar matéria</button>
+                <button onclick="toggleMenus('files-list')">Arquivos</button>
+                <button onclick="toggleMenus('users-pos')">Admin</button>
+            </div>
+            <div class="main">
+         
+                    <form class="new-post post" action="" method="post">
+                        <input type="text" name="post_title" placeholder="título...">
+                        <input type="text" name="post_img" placeholder="imagem...">
+                        <input type="text" name="post_subtitle" placeholder="sub-título...">
+                        <input type="text" name="post_tags" placeholder="tags...">
+                        <textarea type="text" name="post_body" placeholder="conteúdo..."></textarea>
+                        <input type="submit"  name="post_action" value="Publicar">
+                    </form>
+                
+                <div class="edit-post post closes">
+                    <div class="search">
+                        <input id="id_search" type="text" placeholder="Id do post...">
+                        <button onclick="searchPost()">Buscar</button>
+                    </div>
+                    
+                    
+                </div>
+                <div class="files-list closes">
+                    <div class="file-item">
+                        <img src="">
+                        <div class="opitons">
+                            <button>Deletar</button>
+                            <button>Copiar Link</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="users-list closes">
+
+                </div>
+            </div>
+        </div>
+        <%- include('partials/footer.html') %>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script>
+
+            function toggleMenus(menu){
+                $('.new-post').css('display','none')
+                $('.edit-post').css('display','none')
+                $('.files-list').css('display','none')
+                $('.users-list').css('display','none')
+                $('.edit-post').html(
+                    `<div class="search">
+                        <input id="id_search" type="text" placeholder="Id do post...">
+                        <button onclick="searchPost()">Buscar</button>
+                    </div>`
+                )
+                $('.'+menu).css('display','block')
+            }
+
+            function searchPost(){
+                var id = document.getElementById('id_search').value
+                $.ajax({
+                    url : "http://52.91.189.187:3000/getPostSearch",
+                    type : 'POST',
+                    data : {
+                        'post_id' : id,
+                        
+                    },
+                    success : function(results) { 
+                        
+                        if (results != 'null' ){
+                            $('.edit-post').html(
+                            `
+                            <input id="edit_title" type="text" placeholder="título..." value="`+results.post_title+`">
+                            <input id="edit_image" type="text" placeholder="imagem..." value="`+results.post_image+`">
+                            <input id="edit_subtitle" type="text" placeholder="sub-título..." value="`+results.post_subtitle+`">
+                            <input id="edit_tags" type="text" placeholder="tags..." value="`+results.post_tags+`">
+                            <textarea id="edit_body" type="text" placeholder="conteúdo...">`+results.post_body+`</textarea>
+                            <input id="edit_id" type="hidden" value=`+results.post_id+`>
+                            <input onclick="savePostEdit()" type="submit" value="Publicar">`
+                            )
+                        }else{
+                            alert('A publicação não foi encontrada!')
+                        }
+                        
+                    },
+                    error : function(request,error){
+                    }
+                });
+                
+            }
+
+            function savePostEdit(){
+                let post = {
+                    'post_title':document.getElementById('edit_title').value,
+                    'post_image': document.getElementById('edit_image').value,
+                    'post_subtitle':document.getElementById('edit_subtitle').value,
+                    'post_tags':document.getElementById('edit_tags').value,
+                    'post_body':document.getElementById('edit_body').value,
+                    'post_id':document.getElementById('edit_id').value,
+                }
+                if (post.post_title && post.post_subtitle){
+                    $.ajax({
+                    url : "http://52.91.189.187:3000/updatePost",
+                    type : 'POST',
+                    data : {
+                        'post_array' : post,
+                    },
+                    success : function(results) { 
+                        if (results != null ){
+                            alert('A publicação foi salva!')
+                        }else{
+                            alert('A publicação não foi encontrada!')
+                        }
+                    },
+                    error : function(request,error){
+                    }
+                });
+                }else{
+                    alert("Seu post está incompleto!")
+                }
+            }
+
+        </script>
+    </body>
+</html>

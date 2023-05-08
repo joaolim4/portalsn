@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/c58d6bbdac.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/public/search.css">
+        <link rel="stylesheet" href="/public/partials.css">
+    </head>
+    <body> 
+        <%- include('partials/header.html') %>
+        <div class="results-main">
+            <h1>Resultados</h1>
+            <% if(resultBd[0]){
+                for (var i = 0; i < resultBd.length; i++){%>
+                    <a href="post/<%- resultBd[i].post_id %>">
+                        <div class="result-box">
+                            <img src="<%- resultBd[i].post_image %>">
+                            <div class="details">
+                                <h2><%- resultBd[i].post_title %></h2>
+                                <p><%- resultBd[i].post_subtitle %></p>
+                            </div>
+                        </div>
+                    <a>
+                <% }
+            } %>
+        </div>
+        <%- include('partials/hotnews.html') %>
+        <%- include('partials/footer.html') %>
+    </body>
+</html>

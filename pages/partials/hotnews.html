@@ -1,0 +1,41 @@
+<div class="hot-news">
+    <h1>Mais Acessadas</h1>
+    <div class="box-main">
+        
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    $.ajax({
+        url : "http://52.91.189.187:3000/getHotPosts",
+        type : 'POST',
+        data : {},
+        success : function(results) { 
+            if(results != 'null'){
+                $('.hot-news .box-main').html(`
+                 <a href="post/`+results[0].post_id+`">
+                    <div class="news-box-right">
+                        <img src="`+results[0].post_image+`">
+                        <div class="details">
+                            <h2>`+results[0].post_title+`</h2>
+                            <p>`+results[0].post_subtitle+`</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="post/`+results[1].post_id+`">
+                    <div class="news-box-right">
+                        <img src="`+results[1].post_image+`">
+                        <div class="details">
+                            <h2>`+results[1].post_title+`</h2>
+                            <p>`+results[1].post_subtitle+`</p>
+                        </div>
+                    </div>
+                </a>
+                 ` )
+            }
+                      
+        },
+        error : function(request,error){
+        }
+    })
+</script>

@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/c58d6bbdac.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/public/adminlogin.css">
+        <link rel="stylesheet" href="/public/partials.css">
+    </head>
+    <body> 
+        <%- include('partials/header.html') %>
+        <form class="form-login" action="" method="post">
+            <h2>Login</h2>
+            <input type="text" name="user_login" placeholder="Login...">
+            <input type="password" name="user_password" placeholder="Senha...">
+            <input type="submit" name="login_action" value="Logar">
+        </form>
+        <%- include('partials/footer.html') %>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </body>
+</html>
